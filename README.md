@@ -30,4 +30,10 @@ For now, this repo contains following algorithms/models:
   - 遗传算法 Genetic Algorithm
   - 粒子群算法 Particle Swarm Optimization
   - 模拟退火 Simulated Annealing
-
+- 多元分析 Multivariate Analysis
+  - 聚类分析 Cluster Analysis
+  - 主成分分析 Principal Component Analysis
+- 综合评价与决策算法 Comprehensive Evaluation&Decision-Making Method
+  - 数据包络分析 Data Envelopment Analysis
+  - 模糊综合评判法 Fuzzy Comprehensive Evaluatino Method
+  - 灰色关联分析 Grey Relational Analysis
