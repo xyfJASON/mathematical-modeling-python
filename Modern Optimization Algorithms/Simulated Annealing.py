@@ -4,15 +4,15 @@ import matplotlib.pyplot as plt
 
 
 class SimulatedAnnealing:
+    """
+    To run simulated annealing, inherit this class, then
+    override 'gen_init_state_energy` and `next_state_energy`.
+    """
     def __init__(self,
                  init_T: float,
                  end_T: float,
                  cool_factor: float,
                  steps_per_T: int = 1) -> None:
-        """
-        To run simulated annealing, inherit this class, then
-        override 'gen_init_state_energy` and `next_state_energy`.
-        """
         self.init_T = init_T
         self.end_T = end_T
         self.cool_factor = cool_factor

@@ -26,16 +26,17 @@
 
 ```python
 class GeneticAlgorithm:
+    """
+    To run genetic algorithms, inherit this class, then
+    override `gen_init_population_code`, `calc_fitness` and `mutate`.
+    Override `crossover` if needed.
+    """
     def __init__(self,
                  sz_population: int,
                  n_generations: int,
                  rate_cross: float,
                  rate_mutate: float) -> None:
         """
-        To run genetic algorithms, inherit this class, then
-        override `gen_init_population_code`, `calc_fitness` and `mutate`.
-        Override `crossover` if needed.
-
         :param sz_population: size of population (number of individuals)
         :param n_generations: number of generations to evolve
         :param rate_cross: crossing over rate

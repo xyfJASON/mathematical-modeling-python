@@ -39,6 +39,10 @@
 
 ```python
 class ParticleSwarmOptimization:
+    """
+    To run PSO, inherit this class, then
+    override 'gen_init_particles` and `evaluate_particles`.
+    """
     def __init__(self,
                  n_particle: int,
                  T: int,
@@ -49,9 +53,6 @@ class ParticleSwarmOptimization:
                  lb: np.ndarray = None,
                  ub: np.ndarray = None) -> None:
         """
-        To run PSO, inherit this class, then
-        override 'gen_init_particles` and `evaluate_particles`.
-
         :param n_particle: number of particles
         :param T: maximum iterations
         :param c1: factor
