@@ -1,20 +1,15 @@
 # Mathematical-Modeling-with-Python
  This repository contains python codes for mathematical modeling.
 
+<br>
 
+Each algorithm/model is described in a Jupyter notebook.
 
-Each directory in this repo contains algorithms/models of a certain category.
-
-Each algorithm/model is described in several files:
-
-- `.py`: codes regarding the algorithm/model (if any)
-- `.md`: brief introduction to the algorithm/model, along with examples
-- `.html`: exported from `.md` file
-
-
+<br>
 
 For now, this repo contains following algorithms/models:
 
+- 元胞自动机 Cellular Automata
 - 综合评价与决策算法 Comprehensive Evaluation & Decision-Making Method
   - 层次分析法 Analytic Hierarchy Process
   - 数据包络分析 Data Envelopment Analysis
