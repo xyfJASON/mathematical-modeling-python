@@ -52,7 +52,9 @@ $$
 
 * 定义 若线性规划问题的最优目标值 $V_{j0}=1$​，且存在最优解 $\omega>0,\mu>0$​，则称为 DEA 有效的。
 
-## 问题 1![image-20210823155231999](C:\Users\JiangChenyang\AppData\Roaming\Typora\typora-user-images\image-20210823155231999.png)
+## 问题 1
+
+## ![image-20210823155231999](.\image-20210823155231999.png)
 
 试评价学校 A、B、C、D、E、F 哪个学校教学质量更好。
 
