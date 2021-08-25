@@ -37,3 +37,5 @@ For now, this repo contains following algorithms/models:
   - 数据包络分析 Data Envelopment Analysis
   - 模糊综合评判法 Fuzzy Comprehensive Evaluatino Method
   - 灰色关联分析 Grey Relational Analysis
+- 预测模型 Predict Model
+  - 灰色预测模型 Grey Prediction Model
