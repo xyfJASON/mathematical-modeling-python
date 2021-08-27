@@ -15,7 +15,10 @@ For now, this repo contains following algorithms/models:
   - 数据包络分析 Data Envelopment Analysis
   - 模糊综合评判法 Fuzzy Comprehensive Evaluatino Method
   - 灰色关联分析 Grey Relational Analysis
+  - 理想解法 TOPSIS
 - 微分方程 Differential Equation
+  - 常微分方程 Ordinary Differential Equation
+  - 传染病模型 Epidemic Models
 - 插值和拟合 Interpolation and Fitting
   - 插值 Interpolation
   - 拟合 Fitting
