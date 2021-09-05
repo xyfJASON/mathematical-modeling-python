@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+import random
 
 
 class AntColonyAlgorithm_TSP:
@@ -39,14 +40,14 @@ class AntColonyAlgorithm_TSP:
 
     def single_ant_tour(self) -> tuple[float, np.ndarray]:
         distance = 0.0
-        init = np.random.randint(0, self.n_cities)
+        init = random.randint(0, self.n_cities-1)
         now = init
         route = [now]
         while len(route) < self.n_cities:
             prob = (self.tau[now] ** self.alpha) * (self.eta[now] ** self.beta)
             prob[np.array(route)] = 0
             prob = prob / prob.sum()
-            nxt = np.random.choice(self.n_cities, replace=False, p=prob)
+            nxt = random.choices(range(self.n_cities), weights=prob)[0]
             route.append(nxt)
             distance += self.dis[now, nxt]
             now = nxt
@@ -103,7 +104,7 @@ class GeneticAlgorithm:
     def gen_init_population_code(self):
         raise NotImplementedError
 
-    def calc_fitness(self, population_code) -> np.ndarray:
+    def calc_fitness(self, population_code: np.ndarray) -> np.ndarray:
         """ Calculate the fitness of a population.
         Better individuals have higher fitness scores.
         """
@@ -118,11 +119,11 @@ class GeneticAlgorithm:
     def crossover(self, code1: np.ndarray, code2: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         """ Define the crossing over process between two individuals.
         Given two coded individuals, return the crossed version of them.
-        Can be overrided if needed.
+        Can be overridden if needed.
         """
         assert len(code1.shape) == len(code2.shape) == 1
         assert code1.shape[0] == code2.shape[0]
-        pos = np.random.randint(0, code1.shape[0])
+        pos = random.randint(0, code1.shape[0]-1)
         result1 = np.concatenate((code1[:pos], code2[pos:]))
         result2 = np.concatenate((code2[:pos], code1[pos:]))
         return result1, result2
@@ -131,23 +132,24 @@ class GeneticAlgorithm:
         assert len(population_code.shape) == 2
         next_population_code = []
         for code in population_code:
-            new_code = code.copy()
-            if np.random.rand() <= self.rate_cross:
-                code2 = population_code[np.random.randint(0, self.sz_population)]
-                new_code, _ = self.crossover(code, code2)
-            if np.random.rand() <= self.rate_mutate:
-                new_code = self.mutate(new_code)
-            next_population_code.append(new_code)
+            if random.random() <= self.rate_cross:
+                code2 = population_code[random.randint(0, self.sz_population-1)]
+                code, code2 = self.crossover(code, code2)
+                next_population_code.append(code)
+                next_population_code.append(code2)
+            if random.random() <= self.rate_mutate:
+                next_population_code.append(self.mutate(code))
         return np.array(next_population_code)
 
     def select(self, population_code: np.ndarray, fitness: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         assert len(population_code.shape) == 2 and len(fitness.shape) == 1
         assert population_code.shape[0] == fitness.shape[0]
-        # idx = np.argsort(-fitness)[:self.sz_population]
-        idx = np.random.choice(population_code.shape[0],
+        idx = np.random.choice(fitness.shape[0],
                                size=self.sz_population,
                                replace=True,
                                p=(fitness / fitness.sum()))
+        if np.max(fitness) != np.max(fitness[idx]):  # elite reservation strategy
+            idx[fitness[idx].argmin()] = fitness.argmax()
         return population_code[idx], fitness[idx]
 
     def run(self) -> tuple[np.ndarray, np.ndarray]:
@@ -298,7 +300,7 @@ class SimulatedAnnealing:
         next_state, next_energy = self.next_state_energy(cur_state, cur_energy)
         delta_energy = max(0.0, next_energy - cur_energy)
         prob = np.exp(-delta_energy / cur_T)
-        if np.random.rand() <= prob:
+        if random.random() <= prob:
             return next_state, next_energy
         else:
             return cur_state, cur_energy
@@ -309,14 +311,16 @@ class SimulatedAnnealing:
         cur_energy = self.init_energy
         best_state = self.init_state
         best_energy = self.init_energy
-        while cur_T > self.end_T:
-            for _ in range(self.steps_per_T):
-                cur_state, cur_energy = self.step(cur_T, cur_state, cur_energy)
-                if best_energy > cur_energy:
-                    best_state, best_energy = cur_state, cur_energy
-                self.record_energy[0].append(cur_energy)
-                self.record_energy[1].append(best_energy)
-            cur_T *= self.cool_factor
+        with tqdm(total=np.ceil(np.log(self.end_T / self.init_T) / np.log(self.cool_factor))) as pbar:
+            while cur_T > self.end_T:
+                for _ in range(self.steps_per_T):
+                    cur_state, cur_energy = self.step(cur_T, cur_state, cur_energy)
+                    if best_energy > cur_energy:
+                        best_state, best_energy = cur_state, cur_energy
+                    self.record_energy[0].append(cur_energy)
+                    self.record_energy[1].append(best_energy)
+                cur_T *= self.cool_factor
+                pbar.update()
         return best_state, best_energy
 
     def plot(self, history: bool = True, best: bool = True) -> None:

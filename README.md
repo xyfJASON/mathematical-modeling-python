@@ -37,6 +37,7 @@ For now, this repo contains following algorithms/models:
 - 多元分析 Multivariate Analysis
   - 聚类分析 Cluster Analysis
   - 主成分分析 Principal Component Analysis
+  - t-SNE
 - 预测模型 Predict Model
   - 灰色预测模型 Grey Model
 
